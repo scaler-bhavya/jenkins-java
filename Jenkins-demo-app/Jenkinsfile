@@ -29,4 +29,19 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            echo 'Pipeline Succeeded.'
+            mail to: 'your-email@example.com',
+                 subject: "SUCCESS: Build ${currentBuild.fullDisplayName}",
+                 body: "The build completed successfully.\nView logs: ${env.BUILD_URL}"
+        }
+        failure {
+            echo 'Pipeline Failed.'
+            mail to: 'your-email@example.com',
+                 subject: "FAILURE: Build ${currentBuild.fullDisplayName}",
+                 body: "The build failed.\nView logs: ${env.BUILD_URL}"
+        }
+    }
 }
